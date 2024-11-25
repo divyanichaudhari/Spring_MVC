@@ -1,0 +1,18 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Define Address bean -->
+    <bean id="addressBean" class="com.springcore.PersonWithOneAdd.Address">
+        <constructor-arg value="123 Main St"/>
+        <constructor-arg value="Springfield"/>
+        <constructor-arg value="IL"/>
+    </bean>
+
+    <bean id="infoBean" class="com.springcore.PersonWithOneAdd.Info">
+        <property name="name" value="John Doe"/>
+        <property name="address" ref="addressBean"/>
+    </bean>
+
+</beans>
