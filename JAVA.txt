@@ -1,0 +1,223 @@
+
+EXCEPTION
+
+public class InvalidBookingDetailsException extends Exception
+{
+	public InvalidBookingDetailsException(String message) 
+	{
+        super(message);
+    }
+}
+
+
+public class HotelBookingSystem 
+{
+	public boolean validateBookingDetails(String username, String couponCode, String roomType) throws InvalidBookingDetailsException 
+	{
+       	   //fill the code here
+		if(!username.matches("[a-zA-Z]+[_]{1}[a-zA-Z0-9]{5,15}"))//gay_6754gahyt67
+		{
+			throw new InvalidBookingDetailsException("Invalid username");
+		}
+		if(!couponCode.matches("code[0-9]{3}"))//code123
+		{
+			throw new InvalidBookingDetailsException("Invalid coupon code");
+		}
+		
+		if(!roomType.equals("single") && !roomType.equals("double") && !roomType.equals("suit"))
+		{
+			throw new InvalidBookingDetailsException("Invalid room type");
+		}
+		
+//pin305B= "pin[0-9]{3}[A-Z]{1}
+		return true;
+    	}
+//
+	public String getBookingStatus() 
+   	{
+       	     String str="Enjoy Your Stay";
+	        //fill the code here
+	        return str;
+  	}
+}
+
+import java.util.Scanner;
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter your Username");
+        String a=sc.nextLine();
+        System.out.println("Enter your Coupon Code");
+        String b=sc.nextLine();
+        System.out.println("Enter your Room Type");
+        String c=sc.nextLine();
+        
+        HotelBookingSystem h=new HotelBookingSystem();
+        try
+        {
+        	h.validateBookingDetails(a, b, c);
+        	System.out.println( h.getBookingStatus());
+     	
+        	
+        }catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    }
+}
+--------------------------------------------------------------------------------------------------------
+STREAM
+
+import java.util.Date;
+public class Medicine {
+    private String name;
+    private String category;
+    private double price;
+    private String expiryDate;
+
+    public Medicine(String name, String category, double price, String expiryDate) {
+        this.name = name;
+        this.category = category;
+        this.price = price;
+        this.expiryDate = expiryDate;
+    }
+    public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getExpiryDate() {
+		return expiryDate;
+	}
+
+	public void setExpiryDate(String expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+
+	@Override
+	public String toString() {
+		return name+" "+category+" "+price+" "+expiryDate;
+	}
+}
+
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
+import java.util.stream.Stream;
+
+public class MedicineUtil {
+	public Medicine retrieveMedicineDetailsByMedicineName(Stream<Medicine > medicineStream, String name) {
+		//Fill the code here
+		 return medicineStream.filter(a->a.getName().equals(name)).findFirst().orElse(null);
+	}
+	
+	public List<Medicine> retrieveMedicineDetailsByMedicinePrice(Stream<Medicine> medicineStream, double price){
+		//Fill the code here
+		return medicineStream.filter(a->a.getPrice()==price).toList();
+	}
+	public Stream<Medicine> retrieveMedicineDetailsBySortingExpiryDate(Stream<Medicine> medicineStream){
+		//Fill the code here
+		 return medicineStream.sorted(Comparator.comparing(Medicine::getExpiryDate).reversed());
+	}
+}
+-----------------------------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------------------
+
+import java.util.Scanner;
+public class UserInterface {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        
+        System.out.println("Enter your Username");
+        String a=sc.nextLine();
+        System.out.println("Enter your Coupon Code");
+        String b=sc.nextLine();
+        System.out.println("Enter your Room Type");
+        String c=sc.nextLine();
+        
+        HotelBookingSystem h=new HotelBookingSystem();
+        try
+        {
+        	h.validateBookingDetails(a, b, c);
+        	System.out.println( h.getBookingStatus());
+        	
+        }catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+    }
+}
+-----------------------------------------------------------------------------------------------------------
+COLLECTION
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+public class AthleteDetails {
+    private Map<Double,String> athleteMap=new HashMap<Double, String>();
+	
+	public Map<Double,String> getAthleteMap() {
+		return athleteMap;
+	}
+
+	public void setAthleteMap(Map<Double,String> athleteMap) {
+		this.athleteMap = athleteMap;
+	}
+	
+	public void addAthleteDetails(double timeTaken, String athleteName) {				
+	    //Fill the code
+		athleteMap.put(timeTaken, athleteName);
+	    
+	}
+
+	public double findTimeTaken(String athleteName) {
+		//Fill the code		
+		for (Entry<Double, String> a: athleteMap.entrySet()) {
+			
+			if(a.getValue().equals(athleteName))
+			{
+				return a.getKey();
+			}
+			
+		}
+		return -1;
+	}
+	
+	public List<String> findThreeBestPerformers()
+	{
+		//Fill the code
+		List<String> a=new ArrayList<String>();
+		TreeMap<Double, String> t=new TreeMap<Double, String>(athleteMap);
+
+		for (Entry<Double, String> st : t.entrySet()) {
+			for(int i=0;i<3;i++)
+			{
+				a.add(st.getValue());
+			}
+		}
+		
+		return a;
+	}
+}
